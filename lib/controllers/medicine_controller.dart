@@ -8,27 +8,47 @@ import '../models/medicine_model.dart';
 class MedicineController extends GetxController {
   var medicines = <Medicine>[].obs; // یک لیست Observable از داروها
 
+  @override
+  void onInit() {
+    super.onInit();
+    _loadMedicines(); // بارگذاری داده‌ها هنگام مقداردهی اولیه
+  }
+
+  void _loadMedicines() {
+    var box = Hive.box<Medicine>('medicines');
+    if (box.values.isNotEmpty) {
+      medicines.addAll(box.values.cast<Medicine>()); // اضافه کردن داده‌های موجود به لیست Observable
+      if (kDebugMode) {
+        print('Medicines loaded from Hive: ${medicines.length}');
+      }
+    } else {
+      if (kDebugMode) {
+        print('No medicines found in Hive.');
+      }
+    }
+  }
 
   void addMedicine(Medicine medicine) {
     print('Trying to add medicine: ${medicine.name}');
-
     var box = Hive.box<Medicine>('medicines');
-    if (kDebugMode) {
-      print('Trying to add medicine:  ${box.values.last.name}');
-    }
 
     box.add(medicine).then((value) {
-      print('Medicine added to Hive: ${medicine.name}');
+      medicines.add(medicine); // فقط بعد از موفقیت در ذخیره به لیست اضافه کنید
+      print('Medicine added to Hive and list: ${medicine.name}');
     }).catchError((error) {
       print('Failed to add medicine: $error');
     });
-
-    medicines.add(medicine);
-    print('Medicine added to list: ${medicines.length}');
   }
 
   void removeMedicine(int index) {
-    medicines.removeAt(index);
-    Hive.box<Medicine>('medicines').deleteAt(index); // حذف دارو از Hive
+    try {
+      var box = Hive.box<Medicine>('medicines');
+      box.deleteAt(index); // حذف از Hive
+      medicines.removeAt(index); // حذف از لیست Observable
+      print('Medicine removed at index $index');
+    } catch (e) {
+      print('Failed to remove medicine: $e');
+    }
   }
 }
+

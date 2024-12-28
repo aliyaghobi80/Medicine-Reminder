@@ -40,10 +40,11 @@ class NotificationService {
       body,
       scheduledDate,
       notificationDetails,
-      androidAllowWhileIdle: true,
+      // androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
       UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time, // برای زمان‌بندی دقیق روزانه
+      androidScheduleMode: AndroidScheduleMode.exact,
     );
   }
 
