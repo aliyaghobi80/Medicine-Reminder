@@ -357,13 +357,13 @@ class HomeScreen extends StatelessWidget {
                                                   .medicines[index].dosage;
                                               DateTime time = controller
                                                   .medicines[index].time;
+                                              String message = "شما داروی : $name را با: $dosage دوز باید در ساعت: $time مصرف کنید";
+                                              String title = " یادآوری دارو $name";
                                               notificationController
                                                   .showBigTextNotification(
-                                                      title: controller
-                                                          .medicines[index]
-                                                          .name,
+                                                      title:title,
                                                       body:
-                                                          'شما داروی $name با دوز $dosage را باید در ساعت $time مصرف کنید',
+                                                          message,
                                                       fln: notificationController
                                                           .flutterLocalNotificationsPlugin);
                                             },
