@@ -48,6 +48,7 @@ dependencies:
   # Flutter Local Notifications برای ارسال نوتیفیکیشن‌ها
   flutter_local_notifications: ^18.0.1
   timezone: ^0.10.0
+  flutter_datetime_picker_plus: ^2.2.0
   # پکیج‌ مربوط به مسیریابی با GetX
   get_storage: ^2.1.1
 

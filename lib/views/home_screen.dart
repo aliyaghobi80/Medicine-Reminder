@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,8 @@ import '../controllers/medicine_controller.dart';
 import '../controllers/notification_controller.dart';
 import '../services/notification_service.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
+
+import '../widgets/date_time_picker_text.dart';
 
 class HomeScreen extends StatelessWidget {
   final CalendarController controllerCalender = Get.put(CalendarController());
@@ -316,7 +319,7 @@ class HomeScreen extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          //delete medicine
+                                         // delete medicine
                                           ElevatedButton(
                                             onPressed: () async {
                                               // نمایش پیام حذف
@@ -348,7 +351,9 @@ class HomeScreen extends StatelessWidget {
                                             ),
                                             child: const Text("حذف دارو"),
                                           ),
-                                          //notification
+                                          // DatePickerTxt(),
+                                          // ScheduleBtn(),
+                                         // notification
                                           ElevatedButton(
                                             onPressed: () {
                                               String name = controller
@@ -357,15 +362,24 @@ class HomeScreen extends StatelessWidget {
                                                   .medicines[index].dosage;
                                               DateTime time = controller
                                                   .medicines[index].time;
-                                              String message = "شما داروی : $name را با: $dosage دوز باید در ساعت: $time مصرف کنید";
-                                              String title = " یادآوری دارو $name";
+                                              String message =
+                                                  "شما داروی : $name را با: $dosage دوز باید در ساعت: $time مصرف کنید";
+                                              String title =
+                                                  " یادآوری دارو $name";
+                                              final DateTime customTime =
+                                                  DateTime.now().add(
+                                                      Duration(seconds: 10));
+
                                               notificationController
+                                                  //.showBigTextNotification(
                                                   .showBigTextNotification(
-                                                      title:title,
-                                                      body:
-                                                          message,
-                                                      fln: notificationController
-                                                          .flutterLocalNotificationsPlugin);
+                                                id: 0,
+                                                title: title,
+                                                body: message,
+                                                fln: notificationController
+                                                    .flutterLocalNotificationsPlugin,
+                                              );
+                                              log("after notife");
                                             },
                                             style: ElevatedButton.styleFrom(
                                               foregroundColor: Colors.black,

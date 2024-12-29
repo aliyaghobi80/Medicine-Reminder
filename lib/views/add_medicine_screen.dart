@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/medicine_controller.dart';
 import '../models/medicine_model.dart';
+import '../widgets/date_time_picker_text.dart';
 
 class AddMedicineScreen extends StatelessWidget {
   final MedicineController controller = Get.find();
@@ -15,7 +16,7 @@ class AddMedicineScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Medicine'),
+        title: Text('اضافه کردن دارو'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -23,24 +24,28 @@ class AddMedicineScreen extends StatelessWidget {
           children: [
             TextField(
               controller: nameController,
-              decoration: InputDecoration(labelText: 'Medicine Name'),
+              decoration: InputDecoration(labelText: 'نام دارو'),
             ),
             TextField(
               controller: dosageController,
-              decoration: InputDecoration(labelText: 'Dosage'),
+              decoration: InputDecoration(labelText: 'دوز'),
             ),
             SizedBox(height: 20),
+            DatePickerTxt(),
+            // ScheduleBtn(),
             ElevatedButton(
               onPressed: () {
                 final medicine = Medicine(
                   name: nameController.text,
                   dosage: dosageController.text,
-                  time: DateTime.now(),
+                  time: scheduleTime,
                 );
+                print("ساعتش $scheduleTime");
                 controller.addMedicine(medicine);
+
                 Get.back();
               },
-              child: Text('Save'),
+              child: Text('ذخیره'),
             ),
           ],
         ),
